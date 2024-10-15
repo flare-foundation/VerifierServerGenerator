@@ -16,18 +16,9 @@ import {
 } from 'src/config/configuration';
 
 import { ARBase, ARESBase } from 'src/external-libs/interfaces';
-import { IIndexedQueryManager } from 'src/indexed-query-manager/IIndexedQueryManager';
-import { IndexedQueryManagerOptions } from 'src/indexed-query-manager/indexed-query-manager-types';
-import {
-  BtcIndexerQueryManager,
-  DogeIndexerQueryManager,
-} from 'src/indexed-query-manager/UtxoIndexQueryManager';
-import { XrpIndexerQueryManager } from 'src/indexed-query-manager/XrpIndexerQueryManager';
+
 import { EntityManager } from 'typeorm';
-import {
-  AddressValidity_Request,
-  AddressValidity_Response,
-} from '../../dtos/attestation-types/AddressValidity.dto';
+
 import {
   AttestationResponse,
   AttestationResponseEncoded,
@@ -42,18 +33,6 @@ interface IVerificationServiceConfig {
   source: ChainType;
   attestationName: AttestationTypeOptions;
 }
-
-interface IVerificationServiceWithIndexerConfig
-  extends IVerificationServiceConfig {
-  mccClient: typeof MCC.DOGE | typeof MCC.BTC | typeof MCC.XRP;
-  indexerQueryManager:
-    | typeof DogeIndexerQueryManager
-    | typeof BtcIndexerQueryManager
-    | typeof XrpIndexerQueryManager;
-}
-
-export interface ITypeSpecificVerificationServiceConfig
-  extends Omit<IVerificationServiceWithIndexerConfig, 'attestationName'> {}
 
 export abstract class BaseVerifierService<
   Req extends ARBase,
@@ -156,11 +135,10 @@ export abstract class BaseVerifierService<
     if (!response) return new MicResponse({ status: result.status });
     return new MicResponse({
       status: AttestationResponseStatus.VALID,
-      messageIntegrityCode:
-        this.store.attestationResponseHash<AddressValidity_Response>(
-          response,
-          MIC_SALT,
-        ),
+      messageIntegrityCode: this.store.attestationResponseHash<Res>(
+        response,
+        MIC_SALT,
+      ),
     });
   }
 
@@ -174,49 +152,16 @@ export abstract class BaseVerifierService<
     if (!response) return new EncodedRequestResponse({ status: result.status });
     const newRequest = {
       ...request,
-      messageIntegrityCode:
-        this.store.attestationResponseHash<AddressValidity_Response>(
-          response,
-          MIC_SALT,
-        )!,
-    } as AddressValidity_Request;
+      messageIntegrityCode: this.store.attestationResponseHash<Res>(
+        response,
+        MIC_SALT,
+      )!,
+    } as Req;
 
     return new EncodedRequestResponse({
       status: AttestationResponseStatus.VALID,
       abiEncodedRequest: this.store.encodeRequest(newRequest),
     });
-  }
-}
-
-export abstract class BaseVerifierServiceWithIndexer<
-  Req extends ARBase,
-  Res extends ARESBase,
-> extends BaseVerifierService<Req, Res> {
-  client: MccClient;
-  indexedQueryManager: IIndexedQueryManager;
-
-  constructor(
-    protected configService: ConfigService<IConfig>,
-    protected manager: EntityManager,
-    options: IVerificationServiceWithIndexerConfig,
-  ) {
-    super(configService, {
-      source: options.source,
-      attestationName: options.attestationName,
-    });
-    const mccCreate = this.configService.get<MccCreate>('mccCreate');
-    const verifierConfig =
-      this.configService.get<VerifierServerConfig>('verifierConfig');
-    const numberOfConfirmations = verifierConfig.numberOfConfirmations;
-    this.client = new options.mccClient(mccCreate as UtxoMccCreate);
-    const IqmOptions: IndexedQueryManagerOptions = {
-      chainType: options.source,
-      entityManager: this.manager,
-      numberOfConfirmations: () => {
-        return numberOfConfirmations;
-      },
-    };
-    this.indexedQueryManager = new options.indexerQueryManager(IqmOptions);
   }
 }
 

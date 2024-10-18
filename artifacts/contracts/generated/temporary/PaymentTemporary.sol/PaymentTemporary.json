@@ -1,0 +1,323 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "PaymentTemporary",
+  "sourceName": "contracts/generated/temporary/PaymentTemporary.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32[]",
+              "name": "merkleProof",
+              "type": "bytes32[]"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "bytes32",
+                  "name": "attestationType",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "sourceId",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "votingRound",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "lowestUsedTimestamp",
+                  "type": "uint64"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "bytes32",
+                      "name": "transactionId",
+                      "type": "bytes32"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "inUtxo",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "utxo",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct IPayment.RequestBody",
+                  "name": "requestBody",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint64",
+                      "name": "blockNumber",
+                      "type": "uint64"
+                    },
+                    {
+                      "internalType": "uint64",
+                      "name": "blockTimestamp",
+                      "type": "uint64"
+                    },
+                    {
+                      "internalType": "bytes32",
+                      "name": "sourceAddressHash",
+                      "type": "bytes32"
+                    },
+                    {
+                      "internalType": "bytes32",
+                      "name": "receivingAddressHash",
+                      "type": "bytes32"
+                    },
+                    {
+                      "internalType": "bytes32",
+                      "name": "intendedReceivingAddressHash",
+                      "type": "bytes32"
+                    },
+                    {
+                      "internalType": "int256",
+                      "name": "spentAmount",
+                      "type": "int256"
+                    },
+                    {
+                      "internalType": "int256",
+                      "name": "intendedSpentAmount",
+                      "type": "int256"
+                    },
+                    {
+                      "internalType": "int256",
+                      "name": "receivedAmount",
+                      "type": "int256"
+                    },
+                    {
+                      "internalType": "int256",
+                      "name": "intendedReceivedAmount",
+                      "type": "int256"
+                    },
+                    {
+                      "internalType": "bytes32",
+                      "name": "standardPaymentReference",
+                      "type": "bytes32"
+                    },
+                    {
+                      "internalType": "bool",
+                      "name": "oneToOne",
+                      "type": "bool"
+                    },
+                    {
+                      "internalType": "uint8",
+                      "name": "status",
+                      "type": "uint8"
+                    }
+                  ],
+                  "internalType": "struct IPayment.ResponseBody",
+                  "name": "responseBody",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct IPayment.Response",
+              "name": "data",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct IPayment.Proof",
+          "name": "_proof",
+          "type": "tuple"
+        }
+      ],
+      "name": "proof",
+      "outputs": [],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32",
+              "name": "attestationType",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "sourceId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "messageIntegrityCode",
+              "type": "bytes32"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "bytes32",
+                  "name": "transactionId",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "inUtxo",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "utxo",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct IPayment.RequestBody",
+              "name": "requestBody",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct IPayment.Request",
+          "name": "_request",
+          "type": "tuple"
+        }
+      ],
+      "name": "request",
+      "outputs": [],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32",
+              "name": "attestationType",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "sourceId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint64",
+              "name": "votingRound",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "lowestUsedTimestamp",
+              "type": "uint64"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "bytes32",
+                  "name": "transactionId",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "inUtxo",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "utxo",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct IPayment.RequestBody",
+              "name": "requestBody",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint64",
+                  "name": "blockNumber",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "uint64",
+                  "name": "blockTimestamp",
+                  "type": "uint64"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "sourceAddressHash",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "receivingAddressHash",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "intendedReceivingAddressHash",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "int256",
+                  "name": "spentAmount",
+                  "type": "int256"
+                },
+                {
+                  "internalType": "int256",
+                  "name": "intendedSpentAmount",
+                  "type": "int256"
+                },
+                {
+                  "internalType": "int256",
+                  "name": "receivedAmount",
+                  "type": "int256"
+                },
+                {
+                  "internalType": "int256",
+                  "name": "intendedReceivedAmount",
+                  "type": "int256"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "standardPaymentReference",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "oneToOne",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "uint8",
+                  "name": "status",
+                  "type": "uint8"
+                }
+              ],
+              "internalType": "struct IPayment.ResponseBody",
+              "name": "responseBody",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct IPayment.Response",
+          "name": "_response",
+          "type": "tuple"
+        }
+      ],
+      "name": "response",
+      "outputs": [],
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b50610106806100206000396000f3fe6080604052348015600f57600080fd5b5060043610603c5760003560e01c8063611e9d1e14604157806368ed074a14605157806388a9e07114605c575b600080fd5b604f604c3660046067565b50565b005b604f604c366004607f565b604f604c3660046090565b60006102608284031215607957600080fd5b50919050565b600060c08284031215607957600080fd5b60006020828403121560a157600080fd5b813567ffffffffffffffff81111560b757600080fd5b8201610280818503121560c957600080fd5b939250505056fea264697066735822122061b9e992da93fcc6c1faab9443934569865d25aa8488cb443852f6111532048064736f6c63430008140033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b5060043610603c5760003560e01c8063611e9d1e14604157806368ed074a14605157806388a9e07114605c575b600080fd5b604f604c3660046067565b50565b005b604f604c366004607f565b604f604c3660046090565b60006102608284031215607957600080fd5b50919050565b600060c08284031215607957600080fd5b60006020828403121560a157600080fd5b813567ffffffffffffffff81111560b757600080fd5b8201610280818503121560c957600080fd5b939250505056fea264697066735822122061b9e992da93fcc6c1faab9443934569865d25aa8488cb443852f6111532048064736f6c63430008140033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

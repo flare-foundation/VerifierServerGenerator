@@ -1,9 +1,9 @@
 import { Body, HttpCode, Post, UseGuards } from '@nestjs/common';
 import { ApiSecurity } from '@nestjs/swagger';
 
-import { ApiKeyAuthGuard } from 'src/auth/apikey.guard';
-import { ARBase, ARESBase } from 'src/external-libs/interfaces';
-import { BaseVerifierService } from 'src/services/common/verifier-base.service';
+import { ApiKeyAuthGuard } from '../../auth/apikey.guard';
+import { ARBase, ARESBase } from '../../external-libs/interfaces';
+import { BaseVerifierService } from '../../services/common/verifier-base.service';
 import {
   AttestationResponse,
   AttestationResponseVerificationEncoded,

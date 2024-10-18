@@ -13,9 +13,7 @@ import {
   IConfig,
   SourceNames,
   VerifierServerConfig,
-} from 'src/config/configuration';
-
-import { ARBase, ARESBase } from 'src/external-libs/interfaces';
+} from '../../config/configuration';
 
 import { EntityManager } from 'typeorm';
 
@@ -28,6 +26,7 @@ import {
 } from '../../dtos/generic/generic.dto';
 import { AttestationDefinitionStore } from '../../external-libs/AttestationDefinitionStore';
 import { MIC_SALT, encodeAttestationName } from '../../external-libs/utils';
+import { ARBase, ARESBase } from '../../external-libs/interfaces';
 
 interface IVerificationServiceConfig {
   source: ChainType;

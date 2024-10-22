@@ -2,6 +2,8 @@ import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 function GenerateService(name: string): string {
+  const attType = name.replace('I', '');
+
   return `import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
@@ -20,10 +22,11 @@ export class ${name}VerifierService extends BaseVerifierService<
   ${name}_Request,
   ${name}_Response
 > {
-  constructor(
-    protected configService: ConfigService<IConfig>,
-    config: IVerificationServiceConfig,
-  ) {
+    constructor(protected configService: ConfigService<IConfig>) {
+    const config: IVerificationServiceConfig = {
+      source: 'WEB2', //CONFIGURE THIS
+      attestationName: "${attType}",
+    };
     super(configService, config);
   }
 

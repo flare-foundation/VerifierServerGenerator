@@ -35,4 +35,3 @@ export async function runIPaymentVerifierServer() {
 
   logger.log(`Websocket server started listening at ws://0.0.0.0:${PORT}`);
 }
-

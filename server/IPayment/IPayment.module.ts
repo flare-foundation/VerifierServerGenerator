@@ -14,12 +14,15 @@ import { IPaymentVerifierService } from './IPayment.service';
       load: [configuration],
       isGlobal: true,
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (config: ConfigService<IConfig>) =>
-        config.get('typeOrmModuleOptions'),
-      inject: [ConfigService],
-    }),
+
+    // configure connection to database
+    // TypeOrmModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: (config: ConfigService<IConfig>) =>
+    //     config.get('typeOrmModuleOptions'),
+    //   inject: [ConfigService],
+    // }),
+
     AuthModule,
   ],
   controllers: [IPaymentVerifierController],

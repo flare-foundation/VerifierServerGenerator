@@ -19,8 +19,8 @@ import {
 } from '../../dtos/generic/generic.dto';
 
 export interface IVerificationServiceConfig {
-  source: ChainType;
-  attestationName: AttestationTypeOptions;
+  source: SourceNames;
+  attestationName: string;
 }
 
 export abstract class BaseVerifierService<
@@ -37,8 +37,8 @@ export abstract class BaseVerifierService<
     protected configService: ConfigService<IConfig>,
     config: IVerificationServiceConfig,
   ) {
-    this.store = new AttestationDefinitionStore('src/config/type-definitions');
-    this.source = getSourceName(config.source);
+    this.store = new AttestationDefinitionStore('./generated/config');
+    this.source = config.source;
     this.attestationName = config.attestationName;
     this.isTestnet = this.configService.getOrThrow<boolean>('isTestnet');
   }

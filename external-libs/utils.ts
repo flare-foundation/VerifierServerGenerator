@@ -16,7 +16,7 @@ export interface ABIFragment {
 
 export const DEFAULT_ATTESTATION_TYPE_CONFIGS_PATH = path.resolve(
   findPackageRoot(__dirname),
-  'src/src/config/type-definitions',
+  'generated/config',
 );
 export const MIC_SALT = 'Flare';
 export const ZERO_BYTES_20 = ethers.zeroPadBytes('0x', 20);

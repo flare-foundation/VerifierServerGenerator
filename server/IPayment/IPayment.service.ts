@@ -16,10 +16,11 @@ export class IPaymentVerifierService extends BaseVerifierService<
   IPayment_Request,
   IPayment_Response
 > {
-  constructor(
-    protected configService: ConfigService<IConfig>,
-    config: IVerificationServiceConfig,
-  ) {
+    constructor(protected configService: ConfigService<IConfig>) {
+    const config: IVerificationServiceConfig = {
+      source: 'WEB2', //CONFIGURE THIS
+      attestationName: "Payment",
+    };
     super(configService, config);
   }
 

@@ -114,13 +114,11 @@ export function extractVerifierType(): ChainType {
     case 'xrp':
       return ChainType.XRP;
     default:
-      throw new Error(
-        `Wrong verifier type: '${process.env.VERIFIER_TYPE}' provide a valid verifier type: 'doge' | 'btc' | 'xrp'`,
-      );
+      'other';
   }
 }
 
-export type SourceNames = 'DOGE' | 'BTC' | 'XRP';
+export type SourceNames = 'DOGE' | 'BTC' | 'XRP' | 'WEB2';
 export type AttestationTypeOptions =
   | 'AddressValidity'
   | 'BalanceDecreasingTransaction'

@@ -79,12 +79,13 @@ import { ${name}VerifierService } from './${name}.service';
       load: [configuration],
       isGlobal: true,
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (config: ConfigService<IConfig>) =>
-        config.get('typeOrmModuleOptions'),
-      inject: [ConfigService],
-    }),
+    // add connection to a database
+    // TypeOrmModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: (config: ConfigService<IConfig>) =>
+    //     config.get('typeOrmModuleOptions'),
+    //   inject: [ConfigService],
+    // }),
     AuthModule,
   ],
   controllers: [${name}VerifierController],

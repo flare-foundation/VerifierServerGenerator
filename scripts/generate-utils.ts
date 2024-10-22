@@ -147,6 +147,8 @@ export function generateABIConfigs(
 
       let response = abis.responseAbi;
 
+      mkdirSync(abiOutPath, { recursive: true });
+
       writeFileSync(
         `${abiOutPath}/${typeName}.json`,
         JSON.stringify(response, null, 2),
@@ -171,6 +173,8 @@ export function generateDTOs(outPath: string = DTO_PATH): void {
     const dto = getDTOsForName(typeName, config);
 
     let targetFile = join(outPath, `${typeName}.dto.ts`);
+
+    mkdirSync(outPath, { recursive: true });
 
     writeFileSync(targetFile, dto);
   });

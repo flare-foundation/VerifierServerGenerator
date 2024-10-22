@@ -2,6 +2,7 @@ import { ethers } from 'ethers';
 import { existsSync, readFileSync, readdirSync, statSync } from 'fs';
 import * as path from 'path';
 import { TypeRecord } from './config-types';
+import { basename, dirname } from 'path';
 
 /**
  * ABIFragment is a subset of ethers ABIFragment. It is used to define the ABI fragments
@@ -279,7 +280,7 @@ export function readAttestationTypeConfigs(
   const typeRecMap = new Map<string, TypeRecord>();
   const files = readdirSync(configsPath);
   files.forEach((fileName) => {
-    const name = path.basename(fileName, '.json');
+    const name = basename(fileName, '.json');
     typeRecMap.set(
       name,
       JSON.parse(
@@ -322,10 +323,10 @@ export function findPackageRoot(moduleDir: string) {
     if (hasPackageJson && hasNodeModules) {
       return dir;
     }
-    if (path.dirname(dir) === dir) {
+    if (dirname(dir) === dir) {
       // arrived at filesystem root without finding package root
       throw new Error('Cannot find package root');
     }
-    dir = path.dirname(dir);
+    dir = dirname(dir);
   }
 }

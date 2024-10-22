@@ -1,11 +1,15 @@
-import * as path from "path";
-import { DO_NOT_CHANGE_NOTICE, attestationResponseStatusEnum } from "../constants";
-import { VerifierCodeGenerationOptions, defaultVerifierCodeGenerationOptions } from "../interfaces";
-import { prefixDotSlash } from "../utils";
+import {
+  DO_NOT_CHANGE_NOTICE,
+  attestationResponseStatusEnum,
+} from '../constants';
+import {
+  VerifierCodeGenerationOptions,
+  defaultVerifierCodeGenerationOptions,
+} from '../interfaces';
 
 export function genericDTOCode(_options: VerifierCodeGenerationOptions) {
-    const options = { ...defaultVerifierCodeGenerationOptions, ..._options };
-    const content = `
+  const options = { ...defaultVerifierCodeGenerationOptions, ..._options };
+  const content = `
     ${DO_NOT_CHANGE_NOTICE}
     
     ${attestationResponseStatusEnum}
@@ -52,5 +56,5 @@ export function genericDTOCode(_options: VerifierCodeGenerationOptions) {
         messageIntegrityCode?: string;
     }
     `;
-    return content;
+  return content;
 }

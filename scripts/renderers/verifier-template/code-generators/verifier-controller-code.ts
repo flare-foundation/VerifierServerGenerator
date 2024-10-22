@@ -1,30 +1,44 @@
-import * as path from "path";
-import { DO_NOT_CHANGE_NOTICE } from "../constants";
-import { SpecificVerifierCodeGenerationOptions, VerifierCodeGenerationOptions, defaultSpecificVerifierCodeGenerationOptions } from "../interfaces";
-import { toKebabCase, prefixDotSlash } from "../utils";
+import { DO_NOT_CHANGE_NOTICE } from '../constants';
+import {
+  SpecificVerifierCodeGenerationOptions,
+  VerifierCodeGenerationOptions,
+  defaultSpecificVerifierCodeGenerationOptions,
+} from '../interfaces';
+import { toKebabCase } from '../utils';
 
-export function verifierControllerCode(_options: SpecificVerifierCodeGenerationOptions, globalOptions: VerifierCodeGenerationOptions) {
-    const options = { ...defaultSpecificVerifierCodeGenerationOptions, ..._options };
-    const content = `
+export function verifierControllerCode(
+  _options: SpecificVerifierCodeGenerationOptions,
+  globalOptions: VerifierCodeGenerationOptions,
+) {
+  const options = {
+    ...defaultSpecificVerifierCodeGenerationOptions,
+    ..._options,
+  };
+  const content = `
 ${DO_NOT_CHANGE_NOTICE}    
    import { Body, Controller, HttpCode, Post, UseGuards } from "@nestjs/common";
    import { ApiSecurity, ApiTags } from "@nestjs/swagger";
    ${globalOptions.customAuthImport ?? 'import { ApiKeyAuthGuard } from "../../auth/apikey.guard";'}
    
-   import { ${options.dataSource ?? ""}${options.attestationTypeName}VerifierService } from "${options.relativePathToServices}/${
-       options.dataSource ? options.dataSource.toLowerCase() + "/" + options.dataSource.toLowerCase() + "-" : ""
+   import { ${options.dataSource ?? ''}${options.attestationTypeName}VerifierService } from "${options.relativePathToServices}/${
+     options.dataSource
+       ? options.dataSource.toLowerCase() +
+         '/' +
+         options.dataSource.toLowerCase() +
+         '-'
+       : ''
    }${toKebabCase(options.attestationTypeName)}-verifier.service";
    import { AttestationResponseDTO_${options.attestationTypeName}_Response, ${options.attestationTypeName}_RequestNoMic } from "${options.relativePathToDtos}/${
-       options.attestationTypeName
+     options.attestationTypeName
    }.dto";
    import { EncodedRequest, MicResponse, EncodedRequestResponse } from "${options.relativePathToGenericDtos}/generic.dto";
    
    @ApiTags("${options.attestationTypeName}")
-   @Controller("${options.dataSource && globalOptions.prefixDataSourceInRoute ? options.dataSource.toLowerCase() + "/" : ""}${options.attestationTypeName}")   
-   @UseGuards(${globalOptions.customAuthGuard ?? "ApiKeyAuthGuard"})
+   @Controller("${options.dataSource && globalOptions.prefixDataSourceInRoute ? options.dataSource.toLowerCase() + '/' : ''}${options.attestationTypeName}")   
+   @UseGuards(${globalOptions.customAuthGuard ?? 'ApiKeyAuthGuard'})
    @ApiSecurity("X-API-KEY")
-   export class ${options.dataSource ?? ""}${options.attestationTypeName}VerifierController {
-       constructor(private readonly verifierService: ${options.dataSource ?? ""}${options.attestationTypeName}VerifierService) {}
+   export class ${options.dataSource ?? ''}${options.attestationTypeName}VerifierController {
+       constructor(private readonly verifierService: ${options.dataSource ?? ''}${options.attestationTypeName}VerifierService) {}
    
        /**
         *
@@ -46,7 +60,7 @@ ${DO_NOT_CHANGE_NOTICE}
        @HttpCode(200)
        @Post('prepareResponse')
        async prepareResponse(@Body() body: ${options.attestationTypeName}_RequestNoMic): Promise<AttestationResponseDTO_${
-           options.attestationTypeName
+         options.attestationTypeName
        }_Response> {
            return this.verifierService.prepareResponse(body);
        }
@@ -73,5 +87,5 @@ ${DO_NOT_CHANGE_NOTICE}
        }
    }   
 `;
-    return content;
+  return content;
 }

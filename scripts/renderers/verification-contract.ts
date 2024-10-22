@@ -1,4 +1,3 @@
-import path from 'path';
 import { getAttestationTypeASTs } from '../generate-utils';
 import { mkdirSync, readdirSync, writeFileSync } from 'fs';
 import {
@@ -8,6 +7,7 @@ import {
   TYPE_INTERFACE_DEFINITION_PATH,
   VERIFICATION_CONTRACTS_PATH,
 } from '../constants';
+import path, { basename, join } from 'path';
 
 export function mockVerificationForName(name: string): string {
   return (
@@ -78,7 +78,7 @@ export function generateVerificationContracts(
   const astMap = getAttestationTypeASTs();
   astMap.forEach((ast, fileName) => {
     if (!specific || (specific && fileName === specific)) {
-      const name = path.basename(fileName, '.sol');
+      const name = basename(fileName, '.sol');
       mkdirSync(outPath, { recursive: true });
       writeFileSync(
         `${outPath}/${name}Verification.sol`,
@@ -89,7 +89,7 @@ export function generateVerificationContracts(
 }
 
 export function generateVerificationInterfaces(
-  outPath: string = path.join(
+  outPath: string = join(
     VERIFICATION_CONTRACTS_PATH,
     RELATIVE_VERIFICATION_CONTRACTS_INTERFACES_PATH,
   ),
@@ -98,7 +98,7 @@ export function generateVerificationInterfaces(
   const astMap = getAttestationTypeASTs();
   astMap.forEach((ast, fileName) => {
     if (!specific || (specific && fileName === specific)) {
-      const name = path.basename(fileName, '.sol');
+      const name = basename(fileName, '.sol');
       mkdirSync(outPath, { recursive: true });
       writeFileSync(
         `${outPath}/I${name}Verification.sol`,
@@ -116,7 +116,12 @@ export function generateTemporaryContracts(
 
   typeNames.forEach((fileName) => {
     if (!specific || (specific && fileName === specific)) {
-      let name = path.basename(fileName, '.sol').replace('I', '');
+      console.log('tukej');
+
+      console.dir(path);
+      let name = basename(fileName, '.sol').replace('I', '');
+
+      console.log('tukej ne');
 
       console.log(`Temp contract for ${name}`);
 

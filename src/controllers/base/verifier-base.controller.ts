@@ -2,7 +2,7 @@ import { Body, HttpCode, Post, UseGuards } from '@nestjs/common';
 import { ApiSecurity } from '@nestjs/swagger';
 
 import { ApiKeyAuthGuard } from '../../auth/apikey.guard';
-import { ARBase, ARESBase } from '../../external-libs/interfaces';
+import { ARBase, ARESBase } from '../../../external-libs/interfaces';
 import { BaseVerifierService } from '../../services/common/verifier-base.service';
 import {
   AttestationResponse,

@@ -17,41 +17,23 @@ declare module "hardhat/types/runtime" {
       name: "IPaymentTemporary",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IPaymentTemporary__factory>;
-    getContractFactory(
-      name: "PaymentTemporary",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.PaymentTemporary__factory>;
 
     getContractAt(
       name: "IPaymentTemporary",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.IPaymentTemporary>;
-    getContractAt(
-      name: "PaymentTemporary",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.PaymentTemporary>;
 
     deployContract(
       name: "IPaymentTemporary",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IPaymentTemporary>;
-    deployContract(
-      name: "PaymentTemporary",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.PaymentTemporary>;
 
     deployContract(
       name: "IPaymentTemporary",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IPaymentTemporary>;
-    deployContract(
-      name: "PaymentTemporary",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.PaymentTemporary>;
 
     // default types
     getContractFactory(

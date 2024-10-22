@@ -2,7 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { IPaymentTemporary } from "./IPaymentTemporary";
-export type { PaymentTemporary } from "./PaymentTemporary";
 export * as factories from "./factories";
 export { IPaymentTemporary__factory } from "./factories/IPaymentTemporary__factory";
-export { PaymentTemporary__factory } from "./factories/PaymentTemporary__factory";

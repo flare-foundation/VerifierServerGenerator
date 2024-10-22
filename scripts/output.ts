@@ -1,21 +1,19 @@
-import chalk from "chalk";
-
 export function log(msg: string) {
-    console.log(msg);
+  console.log(msg);
 }
 
 export function logInfo(msg: string) {
-    console.log(chalk.blue(msg));
+  console.log(msg);
 }
 
 export function logError(msg: string) {
-    console.log(chalk.red(msg));
+  console.log(msg);
 }
 
 export function logSuccess(msg: string) {
-    console.log(chalk.green(msg));
+  console.log(msg);
 }
 
 export function logWarning(msg: string) {
-    console.log(chalk.yellow(msg));
+  console.log(msg);
 }

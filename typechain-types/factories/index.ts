@@ -2,4 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export { IPaymentTemporary__factory } from "./IPaymentTemporary__factory";
-export { PaymentTemporary__factory } from "./PaymentTemporary__factory";

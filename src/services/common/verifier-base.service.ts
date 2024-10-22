@@ -1,22 +1,15 @@
-import {
-  ChainType,
-  MCC,
-  MccClient,
-  MccCreate,
-  UtxoMccCreate,
-  ZERO_BYTES_32,
-} from '@flarenetwork/mcc';
+import { ChainType, ZERO_BYTES_32 } from '@flarenetwork/mcc';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   AttestationTypeOptions,
   IConfig,
   SourceNames,
-  VerifierServerConfig,
 } from '../../config/configuration';
 
-import { EntityManager } from 'typeorm';
-
+import { AttestationDefinitionStore } from '../../../external-libs/AttestationDefinitionStore';
+import { ARBase, ARESBase } from '../../../external-libs/interfaces';
+import { MIC_SALT, encodeAttestationName } from '../../../external-libs/utils';
 import {
   AttestationResponse,
   AttestationResponseEncoded,
@@ -24,11 +17,8 @@ import {
   EncodedRequestResponse,
   MicResponse,
 } from '../../dtos/generic/generic.dto';
-import { AttestationDefinitionStore } from '../../external-libs/AttestationDefinitionStore';
-import { MIC_SALT, encodeAttestationName } from '../../external-libs/utils';
-import { ARBase, ARESBase } from '../../external-libs/interfaces';
 
-interface IVerificationServiceConfig {
+export interface IVerificationServiceConfig {
   source: ChainType;
   attestationName: AttestationTypeOptions;
 }

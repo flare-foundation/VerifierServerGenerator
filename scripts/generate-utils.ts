@@ -5,7 +5,7 @@ import {
   rmSync,
   writeFileSync,
 } from 'fs';
-import path from 'path/posix';
+import path, { basename, join } from 'path/posix';
 import type { SourceUnit, StructDefinition } from 'solidity-ast';
 import { findAll } from 'solidity-ast/utils';
 import {
@@ -24,6 +24,7 @@ import {
 } from './constants';
 import { logError } from './output';
 import { getDTOsForName } from './renderers/dto';
+import { generateVerifierServer } from './renderers/verifier-server';
 
 /**
  * Extracts Solc compiler output from artifacts/build-info.
@@ -54,7 +55,7 @@ export function getAttestationTypeASTs(): Map<string, SourceUnit> {
   const files = readdirSync(TYPE_INTERFACE_DEFINITION_PATH);
   const astMap = new Map<string, SourceUnit>();
   files.forEach((fileName) => {
-    const name = path.basename(fileName, '.sol');
+    const name = basename(fileName, '.sol');
     astMap.set(
       name,
       solcOutput.sources[`${TYPE_INTERFACE_DEFINITION_PATH}/${fileName}`].ast,
@@ -71,7 +72,7 @@ function getTemporaryABIMap(): Map<string, ABIDefinitions> {
   const files = readdirSync(TEMPORARY_CONTRACTS_PATH);
   const abiMap = new Map<string, ABIDefinitions>();
   files.forEach((fileName) => {
-    const name = path.basename(fileName, '.sol');
+    const name = basename(fileName, '.sol');
     const file = JSON.parse(
       readFileSync(
         `${TEMPORARY_CONTRACTS_COMPILATION_PATH}/${fileName}/${name}.json`,
@@ -100,7 +101,7 @@ export function getTypeConfigMap(specific?: string): Map<string, TypeRecord> {
     if (specific && fileName !== `${specific}.json`) {
       return;
     }
-    const typeName = path.basename(fileName, '.json');
+    const typeName = basename(fileName, '.json');
     const file = JSON.parse(
       readFileSync(`${CONFIGS_PATH}/${fileName}`, 'utf8'),
     );
@@ -169,9 +170,17 @@ export function generateDTOs(outPath: string = DTO_PATH): void {
 
     const dto = getDTOsForName(typeName, config);
 
-    let targetFile = path.join(outPath, `${typeName}.dto.ts`);
+    let targetFile = join(outPath, `${typeName}.dto.ts`);
 
     writeFileSync(targetFile, dto);
+  });
+}
+
+export function generateVerifierServers(): void {
+  const astMap = getAttestationTypeASTs();
+
+  astMap.forEach((_, typeName) => {
+    generateVerifierServer(typeName);
   });
 }
 

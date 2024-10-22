@@ -8,7 +8,6 @@ import {
 import { encodeAttestationName } from '../../external-libs/utils';
 import { TS_TYPES_PATH } from '../constants';
 import { JSDocCommentText, getTypeConfigMap } from '../generate-utils';
-import path from 'path/posix';
 
 export const PRETTIER_SETTINGS_TS: Options = {
   trailingComma: 'all',

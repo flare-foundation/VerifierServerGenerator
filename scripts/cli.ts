@@ -8,7 +8,11 @@ import {
   generateVerifierServers,
 } from './generate-utils';
 import { logError, logInfo, logSuccess } from './output';
-import { generateTemporaryContracts } from './renderers/verification-contract';
+import {
+  generateTemporaryContracts,
+  generateVerificationContracts,
+  generateVerificationInterfaces,
+} from './renderers/verification-contract';
 
 export async function cli(program: Command) {
   program
@@ -32,8 +36,6 @@ export async function cli(program: Command) {
         logInfo(`Compiling contracts...`);
         logInfo('Generating temporary contracts...');
         generateTemporaryContracts(TEMPORARY_CONTRACTS_PATH, options?.type);
-        logInfo(`Cleaning ...`);
-        execSync('yarn hardhat clean', { stdio: 'inherit' });
         logInfo(`Compiling contracts...`);
         execSync('yarn hardhat compile --force', { stdio: 'inherit' });
         logSuccess(`Contracts compiled`);
@@ -44,6 +46,10 @@ export async function cli(program: Command) {
 
         logInfo(`Generating servers`);
         generateVerifierServers();
+
+        logInfo(`Generating verification contracts`);
+        generateVerificationContracts();
+        generateVerificationInterfaces();
 
         rimrafSync(TEMPORARY_CONTRACTS_PATH);
         logSuccess(`Temporary contracts removed`);

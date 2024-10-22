@@ -15,8 +15,8 @@ export function mockVerificationForName(name: string): string {
     `// SPDX-License-Identifier: MIT
   pragma solidity 0.8.20;
   
-  import '../../../${TYPE_INTERFACE_DEFINITION_PATH}/I${name}.sol';
-  import '../${INTERFACE_VERIFICATION_CONTRACTS_PATH}/I${name}Verification.sol';
+  import '../../../interface/types/I${name}.sol';
+  import ''../../interface/verification/I${name}Verification.sol';
   
   /**
    * Contract mocking verifying ${name} attestations.
@@ -42,7 +42,7 @@ export function mockVerificationInterfaceForName(name: string): string {
     `// SPDX-License-Identifier: MIT
   pragma solidity 0.8.20;
   
-  import "../../../configs/contracts/I${name}.sol";
+  import "../../../interface/types/I${name}.sol";
   
   
   interface I${name}Verification {
@@ -78,7 +78,10 @@ export function generateVerificationContracts(
   const astMap = getAttestationTypeASTs();
   astMap.forEach((ast, fileName) => {
     if (!specific || (specific && fileName === specific)) {
-      const name = basename(fileName, '.sol');
+      const nameWithI = basename(fileName, '.sol');
+
+      const name = nameWithI.replace('I', '');
+
       mkdirSync(outPath, { recursive: true });
       writeFileSync(
         `${outPath}/${name}Verification.sol`,
@@ -89,16 +92,16 @@ export function generateVerificationContracts(
 }
 
 export function generateVerificationInterfaces(
-  outPath: string = join(
-    VERIFICATION_CONTRACTS_PATH,
-    RELATIVE_VERIFICATION_CONTRACTS_INTERFACES_PATH,
-  ),
+  outPath: string = join('contracts', 'generated', 'interface', 'verification'),
   specific?: string,
 ): void {
   const astMap = getAttestationTypeASTs();
   astMap.forEach((ast, fileName) => {
     if (!specific || (specific && fileName === specific)) {
-      const name = basename(fileName, '.sol');
+      const nameWithI = basename(fileName, '.sol');
+
+      const name = nameWithI.replace('I', '');
+
       mkdirSync(outPath, { recursive: true });
       writeFileSync(
         `${outPath}/I${name}Verification.sol`,

@@ -116,12 +116,7 @@ export function generateTemporaryContracts(
 
   typeNames.forEach((fileName) => {
     if (!specific || (specific && fileName === specific)) {
-      console.log('tukej');
-
-      console.dir(path);
       let name = basename(fileName, '.sol').replace('I', '');
-
-      console.log('tukej ne');
 
       console.log(`Temp contract for ${name}`);
 

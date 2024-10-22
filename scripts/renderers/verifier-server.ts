@@ -45,7 +45,7 @@ function GenerateController(name: string): string {
     import {
       ${name}_Request,
        ${name}_Response,
-    } from 'generated/dto/ ${name}.dto';
+    } from 'generated/dto/${name}.dto';
     import { BaseVerifierController } from 'src/controllers/base/verifier-base.controller';
     import { ${name}VerifierService } from './${name}.service';
     

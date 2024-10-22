@@ -122,8 +122,6 @@ export function generateABIConfigs(
 ): void {
   const astMap = getAttestationTypeASTs();
 
-  console.dir(astMap);
-
   const configMap = getTemporaryABIMap();
   if (!specific) {
     rmSync(outPath, { recursive: true, force: true });
@@ -164,8 +162,6 @@ export function generateABIConfigs(
  */
 export function generateDTOs(outPath: string = DTO_PATH): void {
   const astMap = getAttestationTypeASTs();
-
-  console.dir(astMap);
 
   astMap.forEach((ast, typeName) => {
     const config = getConfigForAST(ast);

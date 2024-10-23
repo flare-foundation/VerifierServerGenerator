@@ -1,13 +1,11 @@
-import { getAttestationTypeASTs } from '../generate-utils';
 import { mkdirSync, readdirSync, writeFileSync } from 'fs';
+import { basename, join } from 'path';
 import {
-  INTERFACE_VERIFICATION_CONTRACTS_PATH,
-  RELATIVE_VERIFICATION_CONTRACTS_INTERFACES_PATH,
   TEMPORARY_CONTRACTS_PATH,
   TYPE_INTERFACE_DEFINITION_PATH,
   VERIFICATION_CONTRACTS_PATH,
 } from '../constants';
-import path, { basename, join } from 'path';
+import { getAttestationTypeASTs } from '../generate-utils';
 
 export function mockVerificationForName(name: string): string {
   return (
@@ -72,8 +70,8 @@ contract I${name}Temporary {
 }
 
 export function generateVerificationContracts(
-  outPath: string = VERIFICATION_CONTRACTS_PATH,
   specific?: string,
+  outPath: string = VERIFICATION_CONTRACTS_PATH,
 ): void {
   const astMap = getAttestationTypeASTs();
   astMap.forEach((ast, fileName) => {
@@ -92,13 +90,13 @@ export function generateVerificationContracts(
 }
 
 export function generateVerificationInterfaces(
+  specific?: string,
   outPath: string = join(
     'contracts',
     'generated',
     'interfaces',
     'verification',
   ),
-  specific?: string,
 ): void {
   const astMap = getAttestationTypeASTs();
   astMap.forEach((ast, fileName) => {

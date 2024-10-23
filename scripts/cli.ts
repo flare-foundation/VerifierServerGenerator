@@ -16,18 +16,13 @@ import {
 
 export async function cli(program: Command) {
   program
-    .command('config')
+    .command('server')
     .description(
-      'Generates configurations containing JSON ABI definitions (request, response, proof) for all attestation types or just a specific one.',
+      'Generates server templates for all attestation types or just the provided ones. Any previously generated files for the types will be overwritten',
     )
     .option(
       '-t --type <attestationType>',
-      'Generates extended ABI configuration for a specific attestation type only.',
-    )
-    .option(
-      '-o --outPath <outPath>',
-      `Path to output directory. Default value is '${CONFIGS_PATH}'`,
-      CONFIGS_PATH,
+      'Generates server for a specific attestation type only.',
     )
     .action((options) => {
       try {
@@ -35,30 +30,46 @@ export async function cli(program: Command) {
         execSync('yarn hardhat clean', { stdio: 'inherit' });
         logInfo(`Compiling contracts...`);
         logInfo('Generating temporary contracts...');
-        generateTemporaryContracts(TEMPORARY_CONTRACTS_PATH, options?.type);
+        generateTemporaryContracts(TEMPORARY_CONTRACTS_PATH);
         logInfo(`Compiling contracts...`);
         execSync('yarn hardhat compile --force', { stdio: 'inherit' });
         logSuccess(`Contracts compiled`);
-        generateABIConfigs(options.outPath! as string, options?.type);
+        generateABIConfigs(options?.type);
 
         logInfo(`Generating dtos`);
         generateDTOs();
 
         logInfo(`Generating servers`);
-        generateVerifierServers();
+        generateVerifierServers(options?.type);
 
         logInfo(`Generating verification contracts`);
-        generateVerificationContracts();
-        generateVerificationInterfaces();
+        generateVerificationContracts(options?.type);
+        generateVerificationInterfaces(options?.type);
 
         rimrafSync(TEMPORARY_CONTRACTS_PATH);
         logSuccess(`Temporary contracts removed`);
-        logSuccess(
-          `Configurations generated in '${options.outPath! as string}'`,
-        );
+        logSuccess(`Servers generated`);
       } catch (e: any) {
         logError(e.toString());
         process.exit(1);
       }
+    });
+
+  program
+    .command('config')
+    .description('updates or creates config files for attestation types')
+    .action(() => {
+      logInfo(`Cleaning ...`);
+      execSync('yarn hardhat clean', { stdio: 'inherit' });
+      logInfo(`Compiling contracts...`);
+      logInfo('Generating temporary contracts...');
+      generateTemporaryContracts(TEMPORARY_CONTRACTS_PATH);
+      logInfo(`Compiling contracts...`);
+      execSync('yarn hardhat compile --force', { stdio: 'inherit' });
+      logSuccess(`Contracts compiled`);
+      generateABIConfigs();
+
+      logInfo(`Generating dtos`);
+      generateDTOs();
     });
 }

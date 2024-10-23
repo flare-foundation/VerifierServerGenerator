@@ -113,21 +113,22 @@ export function getTypeConfigMap(specific?: string): Map<string, TypeRecord> {
 /**
  * Generates ABI attestation type configurations in JSON format and stores them to outPath.
  * @param outPath output path for generated files
- * @param specific (optional) if specified as the attestation type name, only the ABI configuration for the specified type is generated
+ * @param specificType (optional) if specified as the attestation type name, only the ABI configuration for the specified type is generated
  */
 export function generateABIConfigs(
+  specificType?: string,
   outPath: string = CONFIGS_PATH,
   abiOutPath: string = ABI_PATH,
-  specific?: string,
 ): void {
   const astMap = getAttestationTypeASTs();
 
   const configMap = getTemporaryABIMap();
-  if (!specific) {
+  if (!specificType) {
     rmSync(outPath, { recursive: true, force: true });
   }
+
   astMap.forEach((ast, typeName) => {
-    if (!specific || (specific && typeName === specific)) {
+    if (!specificType || (specificType && typeName === specificType)) {
       const config = getConfigForAST(ast);
 
       const abis = configMap.get(typeName);
@@ -176,11 +177,13 @@ export function generateDTOs(outPath: string = DTO_PATH): void {
   });
 }
 
-export function generateVerifierServers(): void {
+export function generateVerifierServers(specificType?: string): void {
   const astMap = getAttestationTypeASTs();
 
   astMap.forEach((_, typeName) => {
-    generateVerifierServer(typeName);
+    if (!specificType || (specificType && typeName === specificType)) {
+      generateVerifierServer(typeName);
+    }
   });
 }
 

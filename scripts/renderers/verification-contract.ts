@@ -15,8 +15,8 @@ export function mockVerificationForName(name: string): string {
     `// SPDX-License-Identifier: MIT
   pragma solidity 0.8.20;
   
-  import '../../../interface/types/I${name}.sol';
-  import ''../../interface/verification/I${name}Verification.sol';
+  import '../../../interfaces/types/I${name}.sol';
+  import '../../interfaces/verification/I${name}Verification.sol';
   
   /**
    * Contract mocking verifying ${name} attestations.
@@ -42,7 +42,7 @@ export function mockVerificationInterfaceForName(name: string): string {
     `// SPDX-License-Identifier: MIT
   pragma solidity 0.8.20;
   
-  import "../../../interface/types/I${name}.sol";
+  import "../../../interfaces/types/I${name}.sol";
   
   
   interface I${name}Verification {
@@ -60,7 +60,7 @@ export function getTemporaryContractCodeForName(name: string): string {
     `// SPDX-License-Identifier: MIT
 pragma solidity 0.8.20;
 
-import "../../interface/types/I${name}.sol";
+import "../../interfaces/types/I${name}.sol";
 
 contract I${name}Temporary {
   function request(I${name}.Request calldata _request) public pure {}
@@ -92,7 +92,12 @@ export function generateVerificationContracts(
 }
 
 export function generateVerificationInterfaces(
-  outPath: string = join('contracts', 'generated', 'interface', 'verification'),
+  outPath: string = join(
+    'contracts',
+    'generated',
+    'interfaces',
+    'verification',
+  ),
   specific?: string,
 ): void {
   const astMap = getAttestationTypeASTs();

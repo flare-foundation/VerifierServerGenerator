@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
-function GenerateService(name: string): string {
+function generateService(name: string): string {
   const attType = name.replace('I', '');
 
   return `import { Injectable } from '@nestjs/common';
@@ -39,14 +39,15 @@ export class ${name}VerifierService extends BaseVerifierService<
 `;
 }
 
-function GenerateController(name: string): string {
-  return `import { Controller } from '@nestjs/common';
+function generateController(name: string): string {
+  return `import { Body, Controller, HttpCode, Post } from '@nestjs/common';
     import { ApiTags } from '@nestjs/swagger';
     import {
       ${name}_Request,
        ${name}_Response,
     } from 'generated/dto/${name}.dto';
     import { BaseVerifierController } from 'src/controllers/base/verifier-base.controller';
+    import { AttestationResponse } from 'src/dtos/generic/generic.dto';
     import { ${name}VerifierService } from './${name}.service';
     
     @ApiTags('${name}')
@@ -58,11 +59,22 @@ function GenerateController(name: string): string {
       constructor(protected readonly verifierService: ${name}VerifierService) {
         super();
       }
+
+    /**
+    * Tries to verify attestation request (given in JSON) without checking message integrity code, and if successful it returns response.
+    * @param prepareResponseBody
+    * @returns
+    */
+    @HttpCode(200)
+    @Post('prepareResponse') 
+    async prepareResponse(@Body() body: ${name}_Request): Promise<AttestationResponse<${name}_Response>> {
+      return this.verifierService.prepareResponse(body);
     }
+}
 `;
 }
 
-function GenerateModule(name: string): string {
+function generateModule(name: string): string {
   return `import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -95,7 +107,7 @@ export class ${name}VerifierServerModule {}
 `;
 }
 
-function GenerateServer(name: string): string {
+function generateServer(name: string): string {
   const tempString1 = '`${basePath}/api-doc`';
   const tempString2 = '`Server started listening at http://0.0.0.0:${PORT}`';
   const tempString3 =
@@ -142,27 +154,71 @@ export async function run${name}VerifierServer() {
 `;
 }
 
+function generateMain(name: string): string {
+  return `import { run${name}VerifierServer } from './${name}.server';
+
+void run${name}VerifierServer();
+`;
+}
+
+function generateDockerfile(name: string): string {
+  return `FROM node:20-slim AS nodemodules
+
+WORKDIR /app
+
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile 
+
+FROM node:20-slim AS build
+
+WORKDIR /app
+
+COPY --from=nodemodules /app/node_modules /app/node_modules
+COPY . ./
+
+RUN yarn build
+
+FROM node:20-slim AS runtime
+
+WORKDIR /app
+
+COPY --from=nodemodules /app/node_modules /app/node_modules
+COPY --from=build /app/dist /app/dist
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["node", "dist/server/${name}/main.js"]
+`;
+}
+
 export function generateVerifierServer(name: string): void {
   const dirPath = join('server', name);
 
   mkdirSync(dirPath, { recursive: true });
 
-  const service = GenerateService(name);
+  const service = generateService(name);
   const servicePath = join(dirPath, `${name}.service.ts`);
   writeFileSync(servicePath, service);
 
-  const controller = GenerateController(name);
+  const controller = generateController(name);
   const controllerPath = join(dirPath, `${name}.controller.ts`);
-
   writeFileSync(controllerPath, controller);
 
-  const module = GenerateModule(name);
+  const module = generateModule(name);
   const modulePath = join(dirPath, `${name}.module.ts`);
-
   writeFileSync(modulePath, module);
 
-  const server = GenerateServer(name);
+  const server = generateServer(name);
   const serverPath = join(dirPath, `${name}.server.ts`);
-
   writeFileSync(serverPath, server);
+
+  const main = generateMain(name);
+  const mainPath = join(dirPath, `main.ts`);
+  writeFileSync(mainPath, main);
+
+  const dockerfile = generateDockerfile(name);
+  const dockerfilePath = join(dirPath, `Dockerfile`);
+  writeFileSync(dockerfilePath, dockerfile);
 }

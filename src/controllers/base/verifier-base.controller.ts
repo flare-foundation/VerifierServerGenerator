@@ -12,14 +12,6 @@ import {
   MicResponse,
 } from '../../dtos/generic/generic.dto';
 
-class nekej {
-  body: string;
-
-  constructor(body: string) {
-    this.body = body;
-  }
-}
-
 @UseGuards(ApiKeyAuthGuard)
 @ApiSecurity('X-API-KEY')
 export abstract class BaseVerifierController<
@@ -63,8 +55,8 @@ export abstract class BaseVerifierController<
    */
   @HttpCode(200)
   @Post('prepareResponse') // TODO: actually Request where mic is optional
-  async prepareResponse(@Body() body: nekej): Promise<string> {
-    return body.body;
+  async prepareResponse(@Body() body: Req): Promise<AttestationResponse<Res>> {
+    return this.verifierService.prepareResponse(body);
   }
 
   /**

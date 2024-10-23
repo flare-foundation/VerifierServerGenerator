@@ -1,9 +1,9 @@
-export const TYPE_INTERFACE_DEFINITION_PATH = 'contracts/interface/types';
+export const TYPE_INTERFACE_DEFINITION_PATH = 'contracts/interfaces/types';
 export const VERIFICATION_CONTRACTS_PATH =
   'contracts/generated/implementation/verification';
 export const INTERFACE_VERIFICATION_CONTRACTS_PATH =
-  'contracts/generated/interface/verification';
-export const RELATIVE_VERIFICATION_CONTRACTS_INTERFACES_PATH = `interface`;
+  'contracts/generated/interfaces/verification';
+export const RELATIVE_VERIFICATION_CONTRACTS_INTERFACES_PATH = `interfaces`;
 export const TEMPORARY_CONTRACTS_PATH = 'contracts/generated/temporary';
 export const VERIFICATION_CONTRACTS_COMPILATION_PATH = `artifacts/${VERIFICATION_CONTRACTS_PATH}`;
 export const TEMPORARY_CONTRACTS_COMPILATION_PATH = `artifacts/${TEMPORARY_CONTRACTS_PATH}`;

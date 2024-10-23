@@ -58,8 +58,6 @@ interface ITypeTemplate {
 
     /**
      * @notice Request body for TypeTemplate attestation type
-     * @custom:above Additional explanation for 'above' slot in generated Markdown docs
-     * @custom:below Additional explanation for 'below' slot in generated Markdown docs
      * @param bytes32Field example bytes32 field with explanation
      * @param boolField example bool field field with explanation
      * @param requestSubstruct1 example RequestSubstruct1 field with explanation
@@ -74,8 +72,6 @@ interface ITypeTemplate {
 
     /**
      * @notice Additional struct first used in Request body fields
-     * @custom:above Additional explanation for 'above' slot in generated Markdown docs
-     * @custom:below Additional explanation for 'below' slot in generated Markdown docs
      * @param templateStructField example bytes32 field with explanation
      * @param uintArrayField example uint256 array field with explanation
      * @param boolArrayField example bool array field with explanation
@@ -88,8 +84,6 @@ interface ITypeTemplate {
 
     /**
      * @notice Additional struct first used in Request body fields
-     * @custom:above Additional explanation for 'above' slot in generated Markdown docs
-     * @custom:below Additional explanation for 'below' slot in generated Markdown docs
      * @param templateStructField example bytes32 field with explanation
      * @param intArrayField example int256 array field with explanation
      * @param boolArrayField example bool array field with explanation
@@ -102,8 +96,6 @@ interface ITypeTemplate {
 
     /**
      * @notice Response body for TypeTemplate attestation type.
-     * @custom:above Additional explanation for 'above' slot in generated Markdown docs
-     * @custom:below Additional explanation for 'below' slot in generated Markdown docs
      * @param templateResponseField example bytes32 field with explanation
      * @param responseSubstruct1Array example ResponseSubstruct1 array field with explanation
      **/
@@ -115,8 +107,6 @@ interface ITypeTemplate {
 
     /**
      * @notice Additional struct first used in Response body fields
-     * @custom:above Additional explanation for 'above' slot in generated Markdown docs
-     * @custom:below Additional explanation for 'below' slot in generated Markdown docs
      * @param templateStructField description
      **/
     struct ResponseSubstruct1 {

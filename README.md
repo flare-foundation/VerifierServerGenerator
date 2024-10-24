@@ -52,7 +52,7 @@ Pass additional parameter
 yarn generate server -t I<NameOfTheType>
 ```
 
-to generate server template for just the type defined in `I<NameOfTheType>.sol`
+to generate server template for just the type defined in `I<NameOfTheType>.sol`.
 
 ### What has to be configured
 
@@ -70,7 +70,7 @@ Change the source in the constructor to the one specified in type definition.
 
 The main is `verifyRequest` function.
 Implement it in such a way that it matches verification rules defined by attestation type
-(you can also finish the function and then write the rules to match the function)
+(you can also finish the function and then write the rules to match the function).
 
 #### Multiple sources
 
@@ -114,5 +114,5 @@ docker run --rm --publish <PORT>:8000  library/verifier-indexer-api--<NameOfTheT
 
 ## Verification contract
 
-We generate a mock verification contract in solidity with a method `verify<NameOfTheType>` that accepts attestation response with Merkle proof (see struct Proof in `I<NameOfTheType>.sol`) and always confirms it.
+We generate a mock verification contract (and its interface) in solidity with a method `verify<NameOfTheType>` that accepts attestation response with Merkle proof (see struct Proof in `I<NameOfTheType>.sol`) and always confirms it.
 (A verification contract in a real setup would check the response with proof against the Merkle root stored on the Relay contract.)

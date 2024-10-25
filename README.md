@@ -6,6 +6,22 @@
 
 This repo contains a tool for creation of a verifier server using [NestJS](https://nestjs.com/) from an attestation type definition file.
 
+## On FDC
+
+- [Notion page](https://www.notion.so/flare-network/Flare-Hackathon-Guide-Encode-London-3484db409c644f3289d29a9a3b73c7e5)
+
+- [Defining types](/docs/DesigningTypes.md)
+
+- [FDC workflow](/docs/IntegratingFDC.md)
+
+- Meet us at the booth
+
+- [White paper](https://flare.network/wp-content/uploads/FDC_WP_171024_02.pdf)
+
+- [Web page](https://flare.network/)
+
+- [Dev hub](https://dev.flare.network/)
+
 # Getting started
 
 We use [Yarn](https://yarnpkg.com/) for package management.

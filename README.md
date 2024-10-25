@@ -103,7 +103,7 @@ yarn build
 To build an image for I<NameOfTheType> run
 
 ```zsh
-docker build -t library/verifier-indexer-api-<NameOfTheType> -f server/<NameOfTheType>/Dockerfile
+docker build -t library/verifier-indexer-api-<NameOfTheType> -f server/<NameOfTheType>/Dockerfile .
 ```
 
 To start the server run and expose the server on <PORT> run.

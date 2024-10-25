@@ -142,7 +142,7 @@ export async function run${name}VerifierServer() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(${tempString1}, app, document);
 
-  const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3120;
+  const PORT = 8000;
 
   await app.listen(PORT, '0.0.0.0', () =>
     logger.log(${tempString2}),

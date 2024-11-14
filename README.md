@@ -47,7 +47,7 @@ The structs that need to be defined are `RequestBody` and `ResponseBody`.
 All fields should be commented with `@param fieldName` as in the template.
 Substructs can be also be used as indicated in the template.
 
-Place the file inside `contracts/interfaces/types`
+Create folder `contracts/interfaces/types` and place the definition file inside.
 
 ## Generation
 
@@ -74,8 +74,8 @@ to generate server template for just the type defined in `I<NameOfTheType>.sol`.
 
 The server files for `<NameOfTheType>` are generated in `server/I<NameOfTheType>`.
 
-IMPORTANT: Any manual changes to files in `server/I<NameOfTheType>` are overwritten if you call
-`yarn generate server` or `yarn generate server -t I<NameOfTheType>`!
+IMPORTANT: Any manual changes to generated files in `server/I<NameOfTheType>` are overwritten if you call
+`yarn generate server` or `yarn generate server -t I<NameOfTheType>`! Consider implementing verification logic in a different file.
 
 #### One source
 
